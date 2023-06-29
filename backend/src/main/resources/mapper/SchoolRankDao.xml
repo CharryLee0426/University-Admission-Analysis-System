@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xidian.lichen.backend.dao.SchoolRankDao">
+    <select id="getScienceRankByYearAndProvince" resultType="org.xidian.lichen.backend.entity.SchoolRank">
+        select s.school_name, avg(ms.lowest_rank) as school_rank
+        from majorscore as ms, school as s
+        where ms.school_id = s.school_id
+          and s.is_211 = 1
+          and ms.group_id = '1'
+          and ms.province_id = #{province_id}
+          and ms.year = #{year}
+          and ms.category = '普通类'
+        group by ms.school_id, s.school_name
+        order by school_rank;
+    </select>
+
+    <select id="getArtRankByYearAndProvince" resultType="org.xidian.lichen.backend.entity.SchoolRank">
+        select s.school_name, avg(ms.lowest_rank) as school_rank
+        from majorscore as ms, school as s
+        where ms.school_id = s.school_id
+          and s.is_211 = 1
+          and ms.group_id = '2'
+          and ms.province_id = #{province_id}
+          and ms.year = #{year}
+          and ms.category = '普通类'
+        group by ms.school_id, s.school_name
+        order by school_rank;
+    </select>
+</mapper>

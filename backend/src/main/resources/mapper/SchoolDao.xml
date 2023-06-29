@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xidian.lichen.backend.dao.SchoolDao">
+    <select id="listAll" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s
+    </select>
+    
+    <select id="list985" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.is_985 = true
+    </select>
+
+    <select id="list211" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.is_211 = true
+    </select>
+
+    <select id="listDoubleTopTier" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.is_doubletoptier = true
+    </select>
+    
+    <select id="listByProvince" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.province_id = #{province_id}
+    </select>
+    
+    <select id="getSchoolByName" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.school_name = #{school_name}
+    </select>
+
+    <select id="getSchoolById" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.school_id = #{school_id}
+    </select>
+
+    <select id="searchSchoolsByStr" resultType="org.xidian.lichen.backend.entity.School">
+        select * from school s where s.school_name like '%${str}%'
+    </select>
+</mapper>

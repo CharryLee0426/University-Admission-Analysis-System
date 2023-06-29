@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xidian.lichen.backend.dao.MajorIndexDao">
+    <select id="listIndexBySchoolAndMajor" resultType="org.xidian.lichen.backend.entity.MajorIndex">
+        select mi.year, sum(mi.major_index)/count(*) as major_index
+        from (select major, year, sum(lowest_rank)/count(*) as major_index from majorscore
+                                                                          where majorscore.school_id =
+                                                                          (select school.school_id from school
+                                                                          where school.school_name = #{school_name})
+                                                                            and major like '%${major}%'
+                                                                          group by major, year) as mi
+        group by mi.year;
+    </select>
+
+    <select id="listThousandIndexBySchoolAndMajor" resultType="org.xidian.lichen.backend.entity.MajorIndex">
+        select mi.year, (max(mi.major_index)-min(mi.major_index))/1000 as major_index from
+                                                            (select major, year, sum(lowest_rank)/count(*) as major_index
+                                                            from majorscore
+                                                            where majorscore.school_id =
+                                                                (select school.school_id from school
+                                                                where school.school_name = #{school_name})
+                                                                and major like '%${major}%'
+                                                                group by major, year) as mi
+        group by mi.year;
+    </select>
+</mapper>

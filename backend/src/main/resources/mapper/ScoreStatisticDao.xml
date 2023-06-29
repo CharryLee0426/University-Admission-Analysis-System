@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xidian.lichen.backend.dao.ScoreStatisticDao">
+    <select id="listScienceByYearAndProvince" resultType="org.xidian.lichen.backend.entity.ScoreStatistic">
+        select * from scorestatistics ss where ss.group_id='1' and year=#{year} and province_id=#{province_id} order by ss.score desc
+    </select>
+
+    <select id="listArtByYearAndProvince" resultType="org.xidian.lichen.backend.entity.ScoreStatistic">
+        select * from scorestatistics ss where ss.group_id='2' and year=#{year} and province_id=#{province_id} order by ss.score desc
+    </select>
+</mapper>
